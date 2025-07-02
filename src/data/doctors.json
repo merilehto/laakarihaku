@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "name": "Aino Virtanen",
+    "specialty": "Ortopedi",
+    "chain": "Mehiläinen",
+    "location": "Töölö",
+    "availability": "Tänään vapaana",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 2,
+    "name": "Mikael Korhonen",
+    "specialty": "Gastroenterologi",
+    "chain": "Mehiläinen",
+    "location": "Kamppi",
+    "availability": "Tänään vapaana",
+    "languages": ["Suomi", "Englanti", "Ruotsi"],
+    "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 3,
+    "name": "Emma Laakso",
+    "specialty": "Geriatria",
+    "chain": "Terveystalo",
+    "location": "Pasila",
+    "availability": "Huomenna",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1594824434554-15d5c9a6e5a2?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 4,
+    "name": "Juhani Mäkelä",
+    "specialty": "Ortopedi",
+    "chain": "Mehiläinen",
+    "location": "Herttoniemi",
+    "availability": "Tänään vapaana",
+    "languages": ["Suomi"],
+    "image": "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 5,
+    "name": "Sofia Nieminen",
+    "specialty": "Yleislääkäri",
+    "chain": "Pihlajalinna",
+    "location": "Itäkeskus",
+    "availability": "Huomenna",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 6,
+    "name": "Petri Kallio",
+    "specialty": "Ortopedi",
+    "chain": "Mehiläinen",
+    "location": "Malmi",
+    "availability": "Tänään vapaana",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 7,
+    "name": "Liisa Hakkarainen",
+    "specialty": "Gastroenterologi",
+    "chain": "Terveystalo",
+    "location": "Myyrmäki",
+    "availability": "Huomenna",
+    "languages": ["Suomi", "Ruotsi"],
+    "image": "https://images.unsplash.com/photo-1508002366005-75a695ee2d17?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 8,
+    "name": "Kari Heinonen",
+    "specialty": "Geriatria",
+    "chain": "Mehiläinen",
+    "location": "Leppävaara",
+    "availability": "Tällä viikolla",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 9,
+    "name": "Anna Virtala",
+    "specialty": "Ortopedi",
+    "chain": "Pihlajalinna",
+    "location": "Espoo",
+    "availability": "Huomenna",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1594824434554-15d5c9a6e5a2?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 10,
+    "name": "Tommi Lindström",
+    "specialty": "Yleislääkäri",
+    "chain": "Mehiläinen",
+    "location": "Tapiola",
+    "availability": "Tällä viikolla",
+    "languages": ["Suomi", "Ruotsi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 11,
+    "name": "Mari Salo",
+    "specialty": "Gastroenterologi",
+    "chain": "Aava",
+    "location": "Kluuvi",
+    "availability": "Tänään vapaana",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 12,
+    "name": "Jussi Paavola",
+    "specialty": "Ortopedi",
+    "chain": "Mehiläinen",
+    "location": "Vuosaari",
+    "availability": "Huomenna",
+    "languages": ["Suomi"],
+    "image": "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 13,
+    "name": "Helena Rantala",
+    "specialty": "Geriatria",
+    "chain": "Terveystalo",
+    "location": "Sörnäinen",
+    "availability": "Tällä viikolla",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 14,
+    "name": "Ville Repo",
+    "specialty": "Yleislääkäri",
+    "chain": "Mehiläinen",
+    "location": "Kallio",
+    "availability": "Tänään vapaana",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 15,
+    "name": "Sari Koskinen",
+    "specialty": "Ortopedi",
+    "chain": "Pihlajalinna",
+    "location": "Vantaa",
+    "availability": "Tällä viikolla",
+    "languages": ["Suomi", "Englanti", "Venäjä"],
+    "image": "https://images.unsplash.com/photo-1508002366005-75a695ee2d17?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 16,
+    "name": "Heikki Lahtinen",
+    "specialty": "Gastroenterologi",
+    "chain": "Mehiläinen",
+    "location": "Punavuori",
+    "availability": "Huomenna",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 17,
+    "name": "Johanna Kuusisto",
+    "specialty": "Geriatria",
+    "chain": "Terveystalo",
+    "location": "Ruoholahti",
+    "availability": "Tällä viikolla",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1594824434554-15d5c9a6e5a2?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 18,
+    "name": "Matti Järvinen",
+    "specialty": "Ortopedi",
+    "chain": "Mehiläinen",
+    "location": "Oulunkylä",
+    "availability": "Tänään vapaana",
+    "languages": ["Suomi"],
+    "image": "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 19,
+    "name": "Riikka Silvennoinen",
+    "specialty": "Yleislääkäri",
+    "chain": "Pihlajalinna",
+    "location": "Munkkiniemi",
+    "availability": "Huomenna",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 20,
+    "name": "Paavo Tuominen",
+    "specialty": "Gastroenterologi",
+    "chain": "Mehiläinen",
+    "location": "Mellunmäki",
+    "availability": "Tällä viikolla",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 21,
+    "name": "Elina Aho",
+    "specialty": "Geriatria",
+    "chain": "Aava",
+    "location": "Lauttasaari",
+    "availability": "Tänään vapaana",
+    "languages": ["Suomi", "Englanti", "Saksa"],
+    "image": "https://images.unsplash.com/photo-1508002366005-75a695ee2d17?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 22,
+    "name": "Timo Rautiainen",
+    "specialty": "Ortopedi",
+    "chain": "Terveystalo",
+    "location": "Kontula",
+    "availability": "Huomenna",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 23,
+    "name": "Ulla Hakala",
+    "specialty": "Yleislääkäri",
+    "chain": "Mehiläinen",
+    "location": "Jakomäki",
+    "availability": "Tällä viikolla",
+    "languages": ["Suomi", "Englanti"],
+    "image": "https://images.unsplash.com/photo-1594824434554-15d5c9a6e5a2?w=400&h=400&fit=crop&crop=face"
+  },
+  {
+    "id": 24,
+    "name": "Risto Koivisto",
+    "specialty": "Gastroenterologi",
+    "chain": "Pihlajalinna",
+    "location": "Arabianranta",
+    "availability": "Tällä viikolla",
+    "languages": ["Suomi"],
+    "image": "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=400&fit=crop&crop=face"
+  }
+]
