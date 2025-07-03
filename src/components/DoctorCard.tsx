@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Clock } from 'lucide-react';
+import { MapPin, Clock, Star } from 'lucide-react';
 
 interface Doctor {
   id: number;
@@ -27,57 +27,86 @@ const getChainLogo = (chain: string) => {
   return logos[chain as keyof typeof logos] || '🏥';
 };
 
-const getAvailabilityBadge = (availability: string) => {
-  const badgeClasses = {
-    'Tänään vapaana': 'bg-success-100 text-success-800 border-success-200',
+const getAvailabilityStyles = (availability: string) => {
+  const styles = {
+    'Tänään vapaana': 'bg-green-100 text-green-800 border-green-200',
     'Huomenna': 'bg-blue-100 text-blue-800 border-blue-200',
-    'Tällä viikolla': 'bg-gray-100 text-gray-800 border-gray-200'
+    'Tällä viikolla': 'bg-orange-100 text-orange-800 border-orange-200'
   };
   
-  return badgeClasses[availability as keyof typeof badgeClasses] || 'bg-gray-100 text-gray-800 border-gray-200';
+  return styles[availability as keyof typeof styles] || 'bg-gray-100 text-gray-800 border-gray-200';
 };
 
 const DoctorCard: React.FC<DoctorCardProps> = ({ doctor, onBookClick }) => {
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-      <div className="flex items-start space-x-4">
-        <img
-          src={doctor.image}
-          alt={doctor.name}
-          className="w-16 h-16 rounded-full object-cover flex-shrink-0"
-        />
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-lg font-semibold text-gray-900 truncate">
-              {doctor.name}
-            </h3>
-            <span className="text-xl ml-2 flex-shrink-0">
+    <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+      <div className="p-8">
+        <div className="flex items-start gap-6">
+          {/* Doctor Image */}
+          <div className="relative flex-shrink-0">
+            <img
+              src={doctor.image}
+              alt={doctor.name}
+              className="w-24 h-24 rounded-2xl object-cover shadow-lg"
+            />
+            <div className="absolute -top-2 -right-2 text-2xl bg-white rounded-full p-1 shadow-md">
               {getChainLogo(doctor.chain)}
-            </span>
-          </div>
-          
-          <p className="text-gray-600 text-sm mb-2">{doctor.specialty}</p>
-          
-          <div className="flex items-center text-gray-500 text-sm mb-3">
-            <MapPin className="h-4 w-4 mr-1" />
-            <span className="mr-4">{doctor.location}</span>
-            <span className={`px-2 py-1 text-xs rounded-full border ${getAvailabilityBadge(doctor.availability)}`}>
-              <Clock className="h-3 w-3 inline mr-1" />
-              {doctor.availability}
-            </span>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <div className="text-xs text-gray-500">
-              Kielet: {doctor.languages.join(', ')}
             </div>
-            <button
-              onClick={() => onBookClick(doctor)}
-              className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-            >
-              Varaa aika
-            </button>
           </div>
+          
+          {/* Doctor Info */}
+          <div className="flex-1 min-w-0">
+            <div className="mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-purple-700 transition-colors duration-200">
+                {doctor.name}
+              </h3>
+              <p className="text-xl font-semibold text-purple-600 mb-2">{doctor.specialty}</p>
+              
+              {/* Rating */}
+              <div className="flex items-center gap-1 mb-3">
+                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                <span className="text-sm font-medium text-gray-600 ml-2">4.9 (127 arvostelua)</span>
+              </div>
+            </div>
+            
+            {/* Location & Availability */}
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <div className="flex items-center text-gray-600">
+                <MapPin className="h-5 w-5 mr-2 text-orange-500" />
+                <span className="font-medium">{doctor.location}</span>
+              </div>
+              <span className={`px-4 py-2 text-sm font-bold rounded-full border-2 ${getAvailabilityStyles(doctor.availability)}`}>
+                <Clock className="h-4 w-4 inline mr-2" />
+                {doctor.availability}
+              </span>
+            </div>
+            
+            {/* Provider & Languages */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="text-sm text-gray-500">
+                <span className="font-medium text-gray-700">{doctor.chain}</span>
+                <span className="mx-2">•</span>
+                <span>Kielet: {doctor.languages.join(', ')}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Book Button */}
+        <div className="mt-8 pt-6 border-t border-gray-100">
+          <button
+            onClick={() => onBookClick(doctor)}
+            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-4 rounded-2xl text-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-500/30"
+          >
+            Varaa aika • {doctor.chain}
+          </button>
+          <p className="text-xs text-gray-500 text-center mt-3">
+            Siirryt {doctor.chain}:n ajanvaraukseen
+          </p>
         </div>
       </div>
     </div>

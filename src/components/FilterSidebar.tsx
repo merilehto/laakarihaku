@@ -1,19 +1,18 @@
 import React from 'react';
-import { Disclosure } from '@headlessui/react';
-import { ChevronDownIcon } from 'lucide-react';
+import { MapPin, Filter } from 'lucide-react';
 
 interface FilterSidebarProps {
   filters: {
     chains: string[];
     availability: string[];
     specialties: string[];
-    languages: string[];
+    locations: string[];
   };
   selectedFilters: {
     chains: string[];
     availability: string[];
     specialties: string[];
-    languages: string[];
+    locations: string[];
   };
   onFilterChange: (category: string, value: string) => void;
 }
@@ -23,65 +22,113 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
   selectedFilters, 
   onFilterChange 
 }) => {
-  const filterSections = [
-    {
-      title: 'Palveluntarjoaja',
-      key: 'chains',
-      options: filters.chains
-    },
-    {
-      title: 'Saatavuus',
-      key: 'availability',
-      options: filters.availability
-    },
-    {
-      title: 'Erikoisala',
-      key: 'specialties',
-      options: filters.specialties
-    },
-    {
-      title: 'Kielet',
-      key: 'languages',
-      options: filters.languages
-    }
-  ];
+  const locations = ['Helsinki', 'Espoo', 'Vantaa', 'Koko pääkaupunkiseutu'];
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Suodata tuloksia</h2>
+    <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 sticky top-8">
+      <div className="flex items-center gap-3 mb-8">
+        <Filter className="h-6 w-6 text-purple-600" />
+        <h2 className="text-2xl font-bold text-gray-800">Rajaa hakua</h2>
+      </div>
       
-      <div className="space-y-4">
-        {filterSections.map((section) => (
-          <Disclosure key={section.key} defaultOpen>
-            {({ open }) => (
-              <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-gray-50 px-4 py-2 text-left text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-primary-500 focus-visible:ring-opacity-75">
-                  <span>{section.title}</span>
-                  <ChevronDownIcon
-                    className={`${
-                      open ? 'rotate-180 transform' : ''
-                    } h-5 w-5 text-gray-500`}
-                  />
-                </Disclosure.Button>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  <div className="space-y-3">
-                    {section.options.map((option) => (
-                      <label key={option} className="flex items-center">
-                        <input
-                          type="checkbox"
-                          className="rounded border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
-                          checked={selectedFilters[section.key as keyof typeof selectedFilters].includes(option)}
-                          onChange={() => onFilterChange(section.key, option)}
-                        />
-                        <span className="ml-2 text-gray-700">{option}</span>
-                      </label>
-                    ))}
-                  </div>
-                </Disclosure.Panel>
-              </>
-            )}
-          </Disclosure>
-        ))}
+      {/* Location Filter */}
+      <div className="mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <MapPin className="h-5 w-5 text-orange-500" />
+          <h3 className="text-lg font-bold text-gray-800">Sijainti</h3>
+        </div>
+        <div className="space-y-3">
+          {locations.map((location) => (
+            <label key={location} className="flex items-center group cursor-pointer">
+              <input
+                type="checkbox"
+                className="w-5 h-5 rounded-lg border-2 border-gray-300 text-purple-600 focus:ring-purple-500 focus:ring-2 transition-all duration-200"
+                checked={selectedFilters.locations?.includes(location) || false}
+                onChange={() => onFilterChange('locations', location)}
+              />
+              <span className="ml-3 text-gray-700 font-medium group-hover:text-purple-700 transition-colors duration-200">
+                {location}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Provider Filter */}
+      <div className="mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-lg">🏥</span>
+          <h3 className="text-lg font-bold text-gray-800">Palveluntarjoaja</h3>
+        </div>
+        <div className="space-y-3">
+          {filters.chains.map((chain) => (
+            <label key={chain} className="flex items-center group cursor-pointer">
+              <input
+                type="checkbox"
+                className="w-5 h-5 rounded-lg border-2 border-gray-300 text-purple-600 focus:ring-purple-500 focus:ring-2 transition-all duration-200"
+                checked={selectedFilters.chains.includes(chain)}
+                onChange={() => onFilterChange('chains', chain)}
+              />
+              <span className="ml-3 flex items-center gap-2">
+                <span className="text-lg">
+                  {chain === 'Mehiläinen' && '🟦'}
+                  {chain === 'Terveystalo' && '🟩'}
+                  {chain === 'Pihlajalinna' && '🟪'}
+                  {chain === 'Aava' && '🟨'}
+                </span>
+                <span className="text-gray-700 font-medium group-hover:text-purple-700 transition-colors duration-200">
+                  {chain}
+                </span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Availability Filter */}
+      <div className="mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-lg">⏰</span>
+          <h3 className="text-lg font-bold text-gray-800">Saatavuus</h3>
+        </div>
+        <div className="space-y-3">
+          {filters.availability.map((availability) => (
+            <label key={availability} className="flex items-center group cursor-pointer">
+              <input
+                type="checkbox"
+                className="w-5 h-5 rounded-lg border-2 border-gray-300 text-green-600 focus:ring-green-500 focus:ring-2 transition-all duration-200"
+                checked={selectedFilters.availability.includes(availability)}
+                onChange={() => onFilterChange('availability', availability)}
+              />
+              <span className="ml-3 text-gray-700 font-medium group-hover:text-green-700 transition-colors duration-200">
+                {availability}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Specialty Filter */}
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-lg">🩺</span>
+          <h3 className="text-lg font-bold text-gray-800">Erikoisala</h3>
+        </div>
+        <div className="space-y-3">
+          {filters.specialties.map((specialty) => (
+            <label key={specialty} className="flex items-center group cursor-pointer">
+              <input
+                type="checkbox"
+                className="w-5 h-5 rounded-lg border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2 transition-all duration-200"
+                checked={selectedFilters.specialties.includes(specialty)}
+                onChange={() => onFilterChange('specialties', specialty)}
+              />
+              <span className="ml-3 text-gray-700 font-medium group-hover:text-blue-700 transition-colors duration-200">
+                {specialty}
+              </span>
+            </label>
+          ))}
+        </div>
       </div>
     </div>
   );

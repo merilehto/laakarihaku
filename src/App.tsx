@@ -25,17 +25,27 @@ function App() {
     chains: [] as string[],
     availability: [] as string[],
     specialties: [] as string[],
-    languages: [] as string[]
+    locations: [] as string[]
   });
 
   const doctors: Doctor[] = doctorsData;
 
-  // Extract unique filter options
+  // Location mapping for Helsinki suburbs and surrounding areas
+  const getLocationMapping = () => {
+    return {
+      'Helsinki': ['töölö', 'kallio', 'kamppi', 'punavuori', 'vuosaari', 'malmi', 'herttoniemi', 'munkkiniemi', 'lauttasaari', 'sörnäinen', 'oulunkylä', 'mellunmäki', 'kontula', 'arabianranta', 'jakomäki', 'ruoholahti', 'kluuvi', 'pasila', 'itäkeskus'],
+      'Espoo': ['tapiola', 'leppävaara', 'espoo'],
+      'Vantaa': ['myyrmäki', 'vantaa'],
+      'Koko pääkaupunkiseutu': [] // Special case - matches everything
+    };
+  };
+
+  // Extract unique filter options + add location filter
   const filterOptions = useMemo(() => ({
     chains: [...new Set(doctors.map(d => d.chain))],
     availability: [...new Set(doctors.map(d => d.availability))],
     specialties: [...new Set(doctors.map(d => d.specialty))],
-    languages: [...new Set(doctors.flatMap(d => d.languages))]
+    locations: ['Helsinki', 'Espoo', 'Vantaa', 'Koko pääkaupunkiseutu']
   }), [doctors]);
 
   // Filter doctors based on search term and selected filters
@@ -59,11 +69,27 @@ function App() {
       const matchesSpecialty = selectedFilters.specialties.length === 0 || 
         selectedFilters.specialties.includes(doctor.specialty);
 
-      // Language filter
-      const matchesLanguage = selectedFilters.languages.length === 0 || 
-        selectedFilters.languages.some(lang => doctor.languages.includes(lang));
+      // Location filter with suburb mapping
+      const matchesLocation = selectedFilters.locations.length === 0 || 
+        selectedFilters.locations.some(selectedLocation => {
+          if (selectedLocation === 'Koko pääkaupunkiseutu') return true;
+          
+          const locationMapping = getLocationMapping();
+          const suburbs = locationMapping[selectedLocation as keyof typeof locationMapping];
+          
+          if (!suburbs) return false;
+          
+          // Check if doctor's location matches the main city or any of its suburbs
+          const doctorLocation = doctor.location.toLowerCase();
+          
+          // Direct city match
+          if (doctorLocation.includes(selectedLocation.toLowerCase())) return true;
+          
+          // Suburb match
+          return suburbs.some(suburb => doctorLocation.includes(suburb));
+        });
 
-      return matchesSearch && matchesChain && matchesAvailability && matchesSpecialty && matchesLanguage;
+      return matchesSearch && matchesChain && matchesAvailability && matchesSpecialty && matchesLocation;
     });
   }, [doctors, searchTerm, selectedFilters]);
 
@@ -86,6 +112,25 @@ function App() {
     });
   };
 
+  const handleSpecialtySelect = (specialty: string) => {
+    setSearchTerm(specialty);
+  };
+
+  const handleLocationSelect = (location: string) => {
+    handleFilterChange('locations', location);
+  };
+
+  const handleTimeSelect = (time: string) => {
+    const timeMapping: {[key: string]: string} = {
+      'Tänään': 'Tänään vapaana',
+      'Huomenna': 'Huomenna',
+      'Tällä viikolla': 'Tällä viikolla',
+      'Ensi viikolla': 'Tällä viikolla'
+    };
+    const mappedTime = timeMapping[time] || time;
+    handleFilterChange('availability', mappedTime);
+  };
+
   const handleBookClick = (doctor: Doctor) => {
     setSelectedDoctor(doctor);
     setIsModalOpen(true);
@@ -100,14 +145,17 @@ function App() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <SearchBar 
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           resultCount={filteredDoctors.length}
+          onSpecialtySelect={handleSpecialtySelect}
+          onLocationSelect={handleLocationSelect}
+          onTimeSelect={handleTimeSelect}
         />
         
-        <div className="lg:grid lg:grid-cols-4 lg:gap-8">
+        <div className="lg:grid lg:grid-cols-4 lg:gap-12">
           {/* Sidebar */}
           <div className="lg:col-span-1 mb-8 lg:mb-0">
             <FilterSidebar
@@ -119,17 +167,48 @@ function App() {
           
           {/* Results */}
           <div className="lg:col-span-3">
-            {filteredDoctors.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">
-                  Ei tuloksia hakuehdoillasi
+            {!searchTerm && filteredDoctors.length === doctors.length ? (
+              <div className="text-center py-24">
+                <div className="text-8xl mb-8">🔍</div>
+                <h2 className="text-4xl font-bold text-gray-800 mb-4">
+                  yli 800 lääkäriä saatavilla
+                </h2>
+                <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                  Käytä hakua tai suodattimia löytääksesi sopivan lääkärin. 
+                  Kaikki suurimmat terveysyhtiöt yhdessä paikassa.
                 </p>
-                <p className="text-gray-400 text-sm mt-2">
+                <div className="bg-gradient-to-r from-purple-50 to-orange-50 rounded-2xl p-8 max-w-lg mx-auto">
+                  <p className="text-lg font-semibold text-gray-700">
+                    Aloita hakemalla erikoisalaa, sijaintia tai lääkärin nimeä ⬆️
+                  </p>
+                </div>
+              </div>
+            ) : filteredDoctors.length === 0 ? (
+              <div className="text-center py-24">
+                <div className="text-8xl mb-8">😔</div>
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                  Ei tuloksia hakuehdoillasi
+                </h2>
+                <p className="text-xl text-gray-600 mb-8">
                   Kokeile muuttaa hakuehtoja tai suodattimia
                 </p>
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedFilters({
+                      chains: [],
+                      availability: [],
+                      specialties: [],
+                      locations: []
+                    });
+                  }}
+                  className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-200 shadow-lg"
+                >
+                  Tyhjennä kaikki suodattimet
+                </button>
               </div>
             ) : (
-              <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
+              <div className="space-y-8">
                 {filteredDoctors.map(doctor => (
                   <DoctorCard
                     key={doctor.id}
